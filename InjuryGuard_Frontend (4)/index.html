@@ -1,0 +1,2475 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <title>InjuryGuard AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="toast"></div>
+
+<!-- =========================================================
+     AUTHENTICATION
+========================================================= -->
+
+<section id="auth" class="auth">
+
+  <div class="brand">
+    <b>IG</b>
+    <strong>InjuryGuard <i>AI</i></strong>
+  </div>
+
+  <div class="auth-card">
+
+<small>ATHLETE SAFETY PLATFORM</small>
+
+<h1 id="authTitle">Welcome back</h1>
+
+<p id="authText">
+  Sign in to your personal injury screening dashboard.
+</p>
+
+<!-- LOGIN -->
+
+<form id="loginForm">
+
+  <label>
+    Email
+    <input
+      id="loginEmail"
+      type="email"
+      required
+      placeholder="you@example.com"
+    >
+  </label>
+
+  <label>
+    Password
+    <input
+      id="loginPassword"
+      type="password"
+      required
+      placeholder="Password"
+    >
+  </label>
+
+  <button type="submit">
+    Sign in
+  </button>
+
+  <a id="signupLink">
+    Create a new athlete account
+  </a>
+
+</form>
+
+
+<!-- SIGN UP -->
+
+<form id="signupForm" class="hide">
+
+  <div class="grid2">
+
+    <label>
+      Full name
+      <input
+        id="suName"
+        required
+        placeholder="Your full name"
+      >
+    </label>
+
+    <label>
+      Age
+      <input
+        id="suAge"
+        type="number"
+        min="1"
+        max="100"
+        required
+        placeholder="Age"
+      >
+    </label>
+
+  </div>
+
+
+  <div class="grid2">
+
+    <label>
+      Gender
+
+      <select id="suGender" required>
+        <option value="">
+          Select gender
+        </option>
+
+        <option>
+          Male
+        </option>
+
+        <option>
+          Female
+        </option>
+
+        <option>
+          Other
+        </option>
+
+        <option>
+          Prefer not to say
+        </option>
+      </select>
+
+    </label>
+
+
+    <label>
+      Blood group
+
+      <select id="suBloodGroup" required>
+        <option value="">
+          Select blood group
+        </option>
+
+        <option>A+</option>
+        <option>A-</option>
+        <option>B+</option>
+        <option>B-</option>
+        <option>AB+</option>
+        <option>AB-</option>
+        <option>O+</option>
+        <option>O-</option>
+        <option>Unknown</option>
+      </select>
+
+    </label>
+
+  </div>
+
+
+  <label>
+    Email
+
+    <input
+      id="suEmail"
+      type="email"
+      required
+      placeholder="you@example.com"
+    >
+  </label>
+
+
+  <label>
+    Password
+
+    <input
+      id="suPass"
+      type="password"
+      minlength="4"
+      required
+      placeholder="Create a password"
+    >
+  </label>
+
+
+  <label>
+    Primary sport
+
+    <select id="suSport" required>
+
+      <option value="">
+        Select your sport
+      </option>
+
+      <option>Football</option>
+      <option>Cricket</option>
+      <option>Basketball</option>
+      <option>Volleyball</option>
+      <option>Tennis</option>
+      <option>Athletics</option>
+      <option>Badminton</option>
+      <option>Hockey</option>
+      <option>Other</option>
+
+    </select>
+
+  </label>
+
+
+  <button type="submit">
+    Create athlete account
+  </button>
+
+
+  <a id="loginLink">
+    Already have an account? Sign in
+  </a>
+
+</form>
+
+
+<em class="note">
+  Your information is used for athlete screening and report generation.
+</em>
+
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     MAIN APPLICATION
+========================================================= -->
+
+<div id="app" class="hide">
+
+  <!-- =======================================================
+       SIDEBAR
+  ======================================================== -->
+
+  <aside>
+
+<div class="side-brand">
+
+  <b>IG</b>
+
+  <div>
+
+    <strong>
+      InjuryGuard <i>AI</i>
+    </strong>
+
+    <small>
+      Athlete safety platform
+    </small>
+
+  </div>
+
+</div>
+
+
+<nav>
+
+  <button
+    data-page="dashboard"
+    class="active"
+  >
+    ⌂ Dashboard
+  </button>
+
+
+  <button data-page="assessment">
+    ＋ New Assessment
+  </button>
+
+
+  <button data-page="profile">
+    ◯ Athlete Profile
+  </button>
+
+
+  <button data-page="history">
+    ▤ Assessment History
+  </button>
+
+
+  <button data-page="medical">
+    ✚ Medical History
+  </button>
+
+
+  <button data-page="report">
+    ▣ Athlete Report
+  </button>
+
+
+  <button data-page="guidance">
+    ✓ Safety Guidance
+  </button>
+
+</nav>
+
+
+<!-- USER -->
+
+<div class="side-user">
+
+  <span id="sideAvatar">
+    A
+  </span>
+
+  <div>
+
+    <b id="sideName">
+      Athlete
+    </b>
+
+    <small id="sideSport">
+      Sport
+    </small>
+
+  </div>
+
+</div>
+
+
+<button
+  id="logout"
+  class="logout"
+>
+  Log out
+</button>
+
+
+  </aside>
+
+  <!-- =======================================================
+       MAIN CONTENT
+  ======================================================== -->
+
+  <main>
+
+
+<!-- HEADER -->
+
+<header>
+
+  <div>
+
+    <small>
+      INJURYGUARD AI
+    </small>
+
+    <h2 id="pageTitle">
+      Dashboard
+    </h2>
+
+  </div>
+
+  <div id="topUser"></div>
+
+</header>
+
+
+<!-- =====================================================
+     DASHBOARD
+====================================================== -->
+
+<section
+  id="dashboard"
+  class="page"
+>
+
+  <div class="hero">
+
+    <div>
+
+      <small>
+        AI-POWERED ATHLETE SAFETY
+      </small>
+
+      <h1>
+        Hello,
+        <span id="heroName">
+          Athlete
+        </span>.
+      </h1>
+
+      <p>
+        Monitor your injury screening, X-ray history,
+        assessment results and athlete health records
+        from one secure dashboard.
+      </p>
+
+      <button data-go="assessment">
+        Start new assessment →
+      </button>
+
+    </div>
+
+    <div class="hero-logo">
+      IG
+    </div>
+
+  </div>
+
+
+  <!-- STATISTICS -->
+
+  <div class="stats">
+
+    <article>
+
+      <small>
+        ASSESSMENTS
+      </small>
+
+      <b id="countAssess">
+        0
+      </b>
+
+      <span>
+        Saved screening checks
+      </span>
+
+    </article>
+
+
+    <article>
+
+      <small>
+        LAST RISK
+      </small>
+
+      <b id="lastRisk">
+        —
+      </b>
+
+      <span id="lastDate">
+        No assessment yet
+      </span>
+
+    </article>
+
+
+    <article>
+
+      <small>
+        MEDICAL RECORDS
+      </small>
+
+      <b id="countMedical">
+        0
+      </b>
+
+      <span>
+        Recorded history
+      </span>
+
+    </article>
+
+
+    <article>
+
+      <small>
+        X-RAYS
+      </small>
+
+      <b id="dashboardXrayCount">
+        0
+      </b>
+
+      <span>
+        Stored X-ray records
+      </span>
+
+    </article>
+
+  </div>
+
+
+  <!-- DASHBOARD PANELS -->
+
+  <div class="two-panels">
+
+
+    <article class="panel">
+
+      <div class="panel-head">
+
+        <div>
+
+          <small>
+            RECENT
+          </small>
+
+          <h3>
+            Recent assessments
+          </h3>
+
+        </div>
+
+        <a data-go="history">
+          View all
+        </a>
+
+      </div>
+
+      <div id="recent"></div>
+
+    </article>
+
+
+    <article class="panel">
+
+      <div class="panel-head">
+
+        <div>
+
+          <small>
+            ATHLETE REPORT
+          </small>
+
+          <h3>
+            Your health summary
+          </h3>
+
+        </div>
+
+      </div>
+
+
+      <div class="quick">
+
+        <p>
+          <b>Profile</b><br>
+          Personal athlete information and sport details.
+        </p>
+
+        <p>
+          <b>X-ray history</b><br>
+          Review previous injury and healing records.
+        </p>
+
+        <p>
+          <b>Assessment history</b><br>
+          Track previous AI-assisted screening results.
+        </p>
+
+        <button
+          type="button"
+          class="secondary"
+          data-go="report"
+        >
+          View athlete report →
+        </button>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     ASSESSMENT
+====================================================== -->
+
+<section
+  id="assessment"
+  class="page hide"
+>
+
+  <div class="intro">
+
+    <small>
+      NEW ASSESSMENT
+    </small>
+
+    <h1>
+      Complete your screening
+    </h1>
+
+    <p>
+      Enter your current condition and upload supporting
+      X-ray or movement information for AI-assisted screening.
+    </p>
+
+  </div>
+
+
+  <form id="assessmentForm">
+
+
+    <!-- ACTIVITY DETAILS -->
+
+    <div class="form-card">
+
+      <h3>
+        01 — Activity details
+      </h3>
+
+      <div class="grid2">
+
+        <label>
+          Sport
+
+          <input
+            id="sport"
+            required
+            placeholder="e.g. Football"
+          >
+        </label>
+
+
+        <label>
+          Training intensity
+
+          <select
+            id="intensity"
+            required
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option>
+              Low
+            </option>
+
+            <option>
+              Moderate
+            </option>
+
+            <option>
+              High
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <label>
+          Previous injury
+
+          <select
+            id="previous_injury"
+            required
+          >
+
+            <option value="">
+              Select
+            </option>
+
+            <option>
+              No
+            </option>
+
+            <option>
+              Yes
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <label>
+          Recovery days
+
+          <input
+            id="recovery_days"
+            type="number"
+            min="0"
+            value="0"
+            required
+          >
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <!-- CURRENT CONDITION -->
+
+    <div class="form-card">
+
+      <h3>
+        02 — Current condition
+      </h3>
+
+
+      <div class="grid2">
+
+        <label>
+          Pain location
+
+          <input
+            id="pain_location"
+            required
+            placeholder="e.g. Knee"
+          >
+
+        </label>
+
+
+        <label>
+          Pain level
+
+          <select id="pain_level">
+
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+
+          </select>
+
+        </label>
+
+
+        <label>
+          Muscle condition
+
+          <select id="muscle_condition">
+
+            <option>
+              Good
+            </option>
+
+            <option>
+              Moderate
+            </option>
+
+            <option>
+              Weak
+            </option>
+
+            <option>
+              Tired
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <label>
+          Ligament stability
+
+          <select id="ligament_stability">
+
+            <option>
+              Stable
+            </option>
+
+            <option>
+              Moderate
+            </option>
+
+            <option>
+              Unstable
+            </option>
+
+            <option>
+              Not sure
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <label>
+          Mental readiness
+
+          <select id="mental_readiness">
+
+            <option>
+              Ready
+            </option>
+
+            <option>
+              Moderate
+            </option>
+
+            <option>
+              Not ready
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <label>
+          Sleep quality
+
+          <select id="sleep_quality">
+
+            <option>
+              Good
+            </option>
+
+            <option>
+              Average
+            </option>
+
+            <option>
+              Poor
+            </option>
+
+          </select>
+
+        </label>
+
+      </div>
+
+
+      <label>
+
+        How are you feeling?
+
+        <textarea
+          id="feedback"
+          rows="4"
+          placeholder="Describe pain, discomfort, recent changes or anything you want to record..."
+        ></textarea>
+
+      </label>
+
+    </div>
+
+
+    <!-- =================================================
+         X-RAY HISTORY
+    ================================================== -->
+
+    <div class="form-card">
+
+      <h3>
+        03 — X-ray injury history
+      </h3>
+
+      <p class="section-help">
+        Add previous and current X-rays with their dates,
+        body part, injury status and severity. This information
+        can be included in the athlete report.
+      </p>
+
+
+      <div class="grid2">
+
+
+        <label>
+
+          X-ray date
+
+          <input
+            id="xrayDate"
+            type="date"
+          >
+
+        </label>
+
+
+        <label>
+
+          Body part
+
+          <select id="xrayBodyPart">
+
+            <option value="">
+              Select body part
+            </option>
+
+            <option>Head</option>
+            <option>Shoulder</option>
+            <option>Arm</option>
+            <option>Elbow</option>
+            <option>Wrist</option>
+            <option>Hand</option>
+            <option>Chest</option>
+            <option>Back</option>
+            <option>Hip</option>
+            <option>Knee</option>
+            <option>Leg</option>
+            <option>Ankle</option>
+            <option>Foot</option>
+            <option>Other</option>
+
+          </select>
+
+        </label>
+
+
+        <label>
+
+          Injury status
+
+          <select id="xrayStatus">
+
+            <option value="">
+              Select status
+            </option>
+
+            <option>
+              Injury / fracture
+            </option>
+
+            <option>
+              Healing
+            </option>
+
+            <option>
+              Healed
+            </option>
+
+            <option>
+              Follow-up
+            </option>
+
+            <option>
+              Unknown
+            </option>
+
+          </select>
+
+        </label>
+
+
+        <label>
+
+          Injury severity
+
+          <select id="xraySeverity">
+
+            <option value="">
+              Select severity
+            </option>
+
+            <option>
+              Minor
+            </option>
+
+            <option>
+              Moderate
+            </option>
+
+            <option>
+              Severe
+            </option>
+
+            <option>
+              Unknown
+            </option>
+
+          </select>
+
+        </label>
+
+      </div>
+
+
+      <label class="xray-note">
+
+        X-ray notes
+
+        <textarea
+          id="xrayNotes"
+          rows="3"
+          placeholder="Previous fracture, surgery, doctor notes, healing progress..."
+        ></textarea>
+
+      </label>
+
+
+      <div class="xray-upload-row">
+
+
+        <label class="upload">
+
+          <input
+            id="xray"
+            type="file"
+            accept="image/jpeg,image/png,image/jpg"
+          >
+
+          <b>
+            ▣
+          </b>
+
+          <strong>
+            Upload X-ray
+          </strong>
+
+          <small>
+            JPG or PNG
+          </small>
+
+          <em id="xrayName">
+            Choose a file
+          </em>
+
+        </label>
+
+
+        <div class="xray-add-box">
+
+          <strong>
+            Add X-ray to athlete history
+          </strong>
+
+          <p>
+            Save this X-ray with its injury information
+            and date for future reference.
+          </p>
+
+          <button
+            type="button"
+            id="addXray"
+            class="secondary"
+          >
+            + Add X-ray to history
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- X-RAY HISTORY -->
+
+      <div class="xray-history-head">
+
+        <div>
+
+          <small>
+            X-RAY HISTORY
+          </small>
+
+          <h4>
+            Previous and current X-rays
+          </h4>
+
+        </div>
+
+        <span
+          id="xrayCount"
+          class="history-count"
+        >
+          0 X-rays
+        </span>
+
+      </div>
+
+
+      <div
+        id="xrayHistoryList"
+        class="xray-history-list"
+      >
+
+        <div class="empty-xray">
+          No X-rays added yet.
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         VIDEO
+    ================================================== -->
+
+    <div class="form-card">
+
+      <h3>
+        04 — Movement video analysis
+      </h3>
+
+      <p class="section-help">
+        Upload a movement video for AI-assisted movement
+        screening and injury-risk analysis.
+      </p>
+
+
+      <div class="uploads single-upload">
+
+        <label class="upload">
+
+          <input
+            id="video"
+            type="file"
+            accept="video/*,.avi,.mp4,.mov"
+          >
+
+          <b>
+            ▶️
+          </b>
+
+          <strong>
+            Upload movement video
+          </strong>
+
+          <small>
+            MP4, AVI or supported video
+          </small>
+
+          <em id="videoName">
+            Choose a file
+          </em>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+      <button
+        type="reset"
+        class="secondary"
+      >
+        Clear
+      </button>
+
+
+      <button
+        id="analyze"
+        type="submit"
+      >
+        Analyze assessment
+      </button>
+
+    </div>
+
+  </form>
+
+
+  <!-- =================================================
+       RESULT
+  ================================================== -->
+
+  <div
+    id="result"
+    class="result hide"
+  >
+
+    <div class="result-head">
+
+      <div>
+
+        <small>
+          ASSESSMENT RESULT
+        </small>
+
+        <h2>
+          Combined screening result
+        </h2>
+
+      </div>
+
+
+      <button
+        id="newCheck"
+        class="secondary"
+      >
+        New assessment
+      </button>
+
+    </div>
+
+
+    <div class="score">
+
+
+      <div class="circle">
+
+        <b id="percent">
+          0%
+        </b>
+
+        <small>
+          screening score
+        </small>
+
+      </div>
+
+
+      <div>
+
+        <strong
+          id="level"
+          class="badge"
+        >
+          LOW
+        </strong>
+
+        <p id="message"></p>
+
+      </div>
+
+    </div>
+
+
+    <div class="guidance">
+
+      <article>
+
+        <h3>
+          What you can do
+        </h3>
+
+        <ul id="doList"></ul>
+
+      </article>
+
+
+      <article>
+
+        <h3>
+          What to avoid / watch
+        </h3>
+
+        <ul id="avoidList"></ul>
+
+      </article>
+
+    </div>
+
+
+    <div class="disclaimer">
+
+      Prototype AI-assisted screening score only;
+      not a medical diagnosis or clinically validated probability.
+      If symptoms are severe, worsening or persistent,
+      seek evaluation from a qualified healthcare professional.
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     ATHLETE PROFILE
+====================================================== -->
+
+<section
+  id="profile"
+  class="page hide"
+>
+
+  <div class="intro">
+
+    <small>
+      ATHLETE PROFILE
+    </small>
+
+    <h1>
+      MY PROFILE
+    </h1>
+
+    <p>
+      Your personal information used for athlete identification
+      and report generation.
+    </p>
+
+  </div>
+
+
+  <form
+    id="profileForm"
+    class="form-card"
+  >
+
+    <div class="profile-head">
+
+      <span id="profileAvatar">
+        A
+      </span>
+
+      <div>
+
+        <h3 id="profileNameDisplay">
+          Athlete
+        </h3>
+
+        <p id="profileEmail"></p>
+
+      </div>
+
+    </div>
+
+
+    <div class="grid2">
+
+
+      <label>
+
+        Full name
+
+        <input id="profileName">
+
+      </label>
+
+
+      <label>
+
+        Age
+
+        <input
+          id="profileAge"
+          type="number"
+        >
+
+      </label>
+
+
+      <label>
+
+        Gender
+
+        <select id="profileGender">
+
+          <option>
+            Male
+          </option>
+
+          <option>
+            Female
+          </option>
+
+          <option>
+            Other
+          </option>
+
+          <option>
+            Prefer not to say
+          </option>
+
+        </select>
+
+      </label>
+
+
+      <label>
+
+        Blood group
+
+        <select id="profileBloodGroup">
+
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+          <option>Unknown</option>
+
+        </select>
+
+      </label>
+
+
+      <label>
+
+        Primary sport
+
+        <input id="profileSport">
+
+      </label>
+
+
+      <label>
+
+        Phone
+
+        <input
+          id="profilePhone"
+          placeholder="Optional"
+        >
+
+      </label>
+
+    </div>
+
+
+    <button type="submit">
+      Save athlete profile
+    </button>
+
+  </form>
+
+</section>
+
+
+<!-- =====================================================
+     ASSESSMENT HISTORY
+====================================================== -->
+
+<section
+  id="history"
+  class="page hide"
+>
+
+  <div class="intro">
+
+    <small>
+      SCREENING HISTORY
+    </small>
+
+    <h1>
+      Assessment history
+    </h1>
+
+    <p>
+      Review previous AI-assisted injury screening assessments.
+    </p>
+
+  </div>
+
+
+  <div
+    id="historyList"
+    class="stack"
+  ></div>
+
+</section>
+
+
+<!-- =====================================================
+     MEDICAL HISTORY
+====================================================== -->
+
+<section
+  id="medical"
+  class="page hide"
+>
+
+  <div class="intro">
+
+    <small>
+      MEDICAL HISTORY
+    </small>
+
+    <h1>
+      Your medical history
+    </h1>
+
+    <p>
+      Record previous injuries, conditions and recovery information.
+    </p>
+
+  </div>
+
+
+  <form
+    id="medicalForm"
+    class="form-card"
+  >
+
+    <div class="grid2">
+
+
+      <label>
+
+        Previous injury / condition
+
+        <input
+          id="medCondition"
+          required
+          placeholder="e.g. ACL injury"
+        >
+
+      </label>
+
+
+      <label>
+
+        Body area
+
+        <input
+          id="medArea"
+          required
+          placeholder="e.g. Left knee"
+        >
+
+      </label>
+
+
+      <label>
+
+        Date / year
+
+        <input id="medDate">
+
+      </label>
+
+
+      <label>
+
+        Recovery / treatment notes
+
+        <input
+          id="medNotes"
+          placeholder="Optional"
+        >
+
+      </label>
+
+    </div>
+
+
+    <button type="submit">
+      Add medical history
+    </button>
+
+  </form>
+
+
+  <div
+    id="medicalList"
+    class="stack"
+  ></div>
+
+</section>
+
+
+<!-- =====================================================
+     ATHLETE REPORT
+====================================================== -->
+
+<section id="report" class="page hide">
+
+  <style>
+    /* =====================================================
+       ATHLETE REPORT - PREMIUM UI
+    ====================================================== */
+    .ig-report-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .ig-report-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      padding: 30px;
+      margin-bottom: 22px;
+      background:
+        radial-gradient(circle at 90% 10%, rgba(86, 211, 188, .28), transparent 32%),
+        radial-gradient(circle at 10% 100%, rgba(52, 152, 219, .18), transparent 34%),
+        linear-gradient(135deg, #0b1715 0%, #102a25 55%, #123d35 100%);
+      color: #fff;
+      box-shadow: 0 24px 60px rgba(10, 30, 25, .18);
+    }
+
+    .ig-report-hero::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -70px;
+      bottom: -90px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 50%;
+      box-shadow: 0 0 0 32px rgba(255,255,255,.025), 0 0 0 64px rgba(255,255,255,.02);
+    }
+
+    .ig-report-topline {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .ig-report-person {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .ig-report-avatar {
+      width: 76px;
+      height: 76px;
+      flex: 0 0 76px;
+      display: grid;
+      place-items: center;
+      border-radius: 22px;
+      background: rgba(255,255,255,.13);
+      border: 1px solid rgba(255,255,255,.18);
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      backdrop-filter: blur(12px);
+    }
+
+    .ig-report-kicker {
+      margin: 0 0 5px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      opacity: .68;
+    }
+
+    .ig-report-hero h1 {
+      margin: 0;
+      font-size: clamp(25px, 4vw, 38px);
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      color: #fff;
+    }
+
+    .ig-report-hero-sub {
+      margin: 8px 0 0;
+      color: rgba(255,255,255,.72);
+      font-size: 14px;
+    }
+
+    .ig-report-status {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .ig-report-status span {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(91, 220, 188, .14);
+      border: 1px solid rgba(120, 235, 205, .22);
+      color: #a9f3df;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .ig-report-status small {
+      color: rgba(255,255,255,.55);
+      font-size: 11px;
+    }
+
+    .ig-report-actions-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .ig-report-actions-top button {
+      border-radius: 12px;
+    }
+
+    .ig-report-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .ig-summary-card {
+      position: relative;
+      overflow: hidden;
+      padding: 19px;
+      border-radius: 19px;
+      background: #fff;
+      border: 1px solid rgba(15, 30, 28, .08);
+      box-shadow: 0 12px 30px rgba(18, 35, 31, .07);
+    }
+
+    .ig-summary-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 4px;
+      height: 100%;
+      background: #1aa889;
+    }
+
+    .ig-summary-card small {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      color: #7a8582;
+    }
+
+    .ig-summary-card strong {
+      display: block;
+      font-size: 25px;
+      line-height: 1.1;
+      color: #10201d;
+    }
+
+    .ig-summary-card span {
+      display: block;
+      margin-top: 7px;
+      font-size: 12px;
+      color: #7b8582;
+    }
+
+    .ig-report-body {
+      display: grid;
+      gap: 18px;
+    }
+
+    .ig-report-panel {
+      background: #fff;
+      border: 1px solid rgba(15, 30, 28, .08);
+      border-radius: 22px;
+      padding: 25px;
+      box-shadow: 0 12px 34px rgba(18, 35, 31, .06);
+    }
+
+    .ig-panel-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 19px;
+    }
+
+    .ig-panel-heading-left {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .ig-section-number {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: #e9f8f4;
+      color: #087e68;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .ig-panel-heading h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #152522;
+    }
+
+    .ig-panel-heading p {
+      margin: 3px 0 0;
+      font-size: 12px;
+      color: #8a9491;
+    }
+
+    .ig-report-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .ig-detail {
+      padding: 15px 16px;
+      border: 1px solid #edf0ef;
+      border-radius: 14px;
+      background: #fafcfb;
+    }
+
+    .ig-detail span,
+    .ig-risk-box span {
+      display: block;
+      margin-bottom: 6px;
+      color: #89928f;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .ig-detail strong {
+      display: block;
+      color: #1a2926;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .ig-risk-layout {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .ig-risk-ring {
+      width: 185px;
+      height: 185px;
+      margin: auto;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: conic-gradient(#1aa889 0deg, #45c8aa 220deg, #e9f1ef 220deg, #e9f1ef 360deg);
+      position: relative;
+    }
+
+    .ig-risk-ring::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .ig-risk-ring-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .ig-risk-ring strong {
+      display: block;
+      font-size: 38px;
+      line-height: 1;
+      color: #10201d;
+      letter-spacing: -.04em;
+    }
+
+    .ig-risk-ring small {
+      display: block;
+      margin-top: 7px;
+      color: #7f8986;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .ig-risk-details {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+    }
+
+    .ig-risk-box {
+      padding: 16px;
+      border-radius: 15px;
+      background: #f8fbfa;
+      border: 1px solid #edf1ef;
+    }
+
+    .ig-risk-box strong {
+      font-size: 16px;
+      color: #172824;
+    }
+
+    .ig-risk-message {
+      grid-column: 1 / -1;
+      padding: 15px 17px;
+      border-radius: 14px;
+      background: #eef9f6;
+      color: #24554b;
+      font-size: 13px;
+      line-height: 1.6;
+      border-left: 4px solid #1aa889;
+    }
+
+    .ig-record-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .ig-record-empty {
+      padding: 22px;
+      border: 1px dashed #cfd9d6;
+      border-radius: 15px;
+      text-align: center;
+      color: #89928f;
+      font-size: 13px;
+      background: #fbfcfc;
+    }
+
+    .ig-record-list .report-item {
+      display: grid;
+      grid-template-columns: 1.2fr repeat(3, minmax(100px, 1fr));
+      gap: 14px;
+      align-items: center;
+      padding: 15px 16px;
+      border: 1px solid #edf0ef;
+      border-radius: 14px;
+      background: #fbfcfc;
+    }
+
+    .ig-record-list .report-item strong {
+      color: #1a2926;
+      font-size: 13px;
+    }
+
+    .ig-record-list .report-item small {
+      color: #747f7b;
+      font-size: 11px;
+    }
+
+    .ig-report-disclaimer {
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+      padding: 18px;
+      border-radius: 16px;
+      background: #fff9ec;
+      border: 1px solid #f1dfb8;
+      color: #68552e;
+    }
+
+    .ig-report-disclaimer-icon {
+      width: 30px;
+      height: 30px;
+      flex: 0 0 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: #f6d98f;
+      color: #6c5118;
+      font-weight: 900;
+    }
+
+    .ig-report-disclaimer strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .ig-report-disclaimer p {
+      margin: 0;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .ig-report-bottom-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ig-report-bottom-actions button {
+      min-height: 44px;
+    }
+
+
+    .ig-report-filter {
+      margin-bottom: 22px;
+      padding: 22px 24px;
+      border-radius: 22px;
+      background: #fff;
+      border: 1px solid rgba(15, 30, 28, .08);
+      box-shadow: 0 12px 34px rgba(18, 35, 31, .06);
+    }
+
+    .ig-report-filter-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .ig-report-filter-head h3 {
+      margin: 0 0 4px;
+      color: #152522;
+      font-size: 18px;
+    }
+
+    .ig-report-filter-head p {
+      margin: 0;
+      color: #7f8986;
+      font-size: 12px;
+    }
+
+    .ig-report-filter-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto auto;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .ig-report-filter-grid label {
+      margin: 0;
+    }
+
+    .ig-report-filter-grid input {
+      width: 100%;
+    }
+
+    .ig-report-period {
+      margin: 14px 0 0;
+      color: #60706b;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 850px) {
+      .ig-report-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ig-report-filter-grid { grid-template-columns: 1fr 1fr; }
+      .ig-report-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ig-risk-layout { grid-template-columns: 1fr; }
+      .ig-record-list .report-item { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .ig-report-hero { padding: 22px; border-radius: 21px; }
+      .ig-report-topline { flex-direction: column; }
+      .ig-report-status { align-items: flex-start; }
+      .ig-report-summary { grid-template-columns: 1fr 1fr; }
+      .ig-report-filter-grid { grid-template-columns: 1fr; }
+      .ig-report-grid, .ig-risk-details { grid-template-columns: 1fr; }
+      .ig-risk-message { grid-column: auto; }
+      .ig-report-panel { padding: 18px; border-radius: 18px; }
+      .ig-record-list .report-item { grid-template-columns: 1fr; }
+      .ig-report-avatar { width: 60px; height: 60px; flex-basis: 60px; }
+    }
+
+    @media print {
+      .ig-report-actions-top,
+      .ig-report-bottom-actions,
+      .ig-report-filter,
+      aside,
+      header,
+      .intro { display: none !important; }
+      .ig-report-shell { max-width: none; }
+      .ig-report-hero { box-shadow: none; break-inside: avoid; }
+      .ig-report-panel { box-shadow: none; break-inside: avoid; }
+      #report { display: block !important; }
+    }
+  </style>
+
+  <div class="ig-report-shell">
+
+    <div class="ig-report-hero">
+      <div class="ig-report-topline">
+        <div class="ig-report-person">
+          <div class="ig-report-avatar">
+            <span id="reportAvatar">A</span>
+          </div>
+
+          <div>
+            <p class="ig-report-kicker">INJURYGUARD AI · ATHLETE REPORT</p>
+            <h1 id="reportName">Athlete</h1>
+            <p class="ig-report-hero-sub">
+              <span id="reportSport">Sport</span> · Personal injury screening summary
+            </p>
+          </div>
+        </div>
+
+        <div class="ig-report-status">
+          <span>● PERSONAL HEALTH SUMMARY</span>
+          <small>AI-assisted screening record</small>
+        </div>
+      </div>
+
+      <div class="ig-report-actions-top">
+        <button id="downloadReport" type="button">
+          ↓ Download PDF Report
+        </button>
+        <button id="printReport" type="button" class="secondary">
+          Print Report
+        </button>
+      </div>
+    </div>
+
+    <!-- REPORT PERIOD FILTER -->
+    <div class="ig-report-filter">
+      <div class="ig-report-filter-head">
+        <div>
+          <h3>Select report period</h3>
+          <p>
+            Choose the visit-history period to display and include in the PDF report.
+            Only the currently logged-in athlete's records are used.
+          </p>
+        </div>
+      </div>
+
+      <div class="ig-report-filter-grid">
+        <label>
+          From date
+          <input id="reportFrom" type="date">
+        </label>
+
+        <label>
+          To date
+          <input id="reportTo" type="date">
+        </label>
+
+        <button id="applyReportFilter" type="button">
+          View Report
+        </button>
+
+        <button id="clearReportFilter" type="button" class="secondary">
+          All Dates
+        </button>
+      </div>
+
+      <p id="reportPeriod" class="ig-report-period">
+        Showing all available visits for this athlete.
+      </p>
+    </div>
+
+    <div class="ig-report-summary">
+      <div class="ig-summary-card">
+        <small>Latest risk</small>
+        <strong id="reportSummaryRisk">—</strong>
+        <span>Latest score in selected period</span>
+      </div>
+
+      <div class="ig-summary-card">
+        <small>Risk level</small>
+        <strong id="reportSummaryLevel">—</strong>
+        <span>Latest status in selected period</span>
+      </div>
+
+      <div class="ig-summary-card">
+        <small>X-ray records</small>
+        <strong id="reportXrayCount">0</strong>
+        <span>Records in selected period</span>
+      </div>
+
+      <div class="ig-summary-card">
+        <small>Assessments</small>
+        <strong id="reportAssessmentCount">0</strong>
+        <span>Visits in selected period</span>
+      </div>
+    </div>
+
+    <div class="ig-report-body">
+
+      <!-- 01 PERSONAL INFORMATION -->
+      <div class="ig-report-panel">
+        <div class="ig-panel-heading">
+          <div class="ig-panel-heading-left">
+            <span class="ig-section-number">01</span>
+            <div>
+              <h3>Personal information</h3>
+              <p>Athlete identity and profile details</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ig-report-grid">
+          <div class="ig-detail">
+            <span>Full name</span>
+            <strong id="reportFullName">—</strong>
+          </div>
+          <div class="ig-detail">
+            <span>Age</span>
+            <strong id="reportAge">—</strong>
+          </div>
+          <div class="ig-detail">
+            <span>Gender</span>
+            <strong id="reportGender">—</strong>
+          </div>
+          <div class="ig-detail">
+            <span>Blood group</span>
+            <strong id="reportBloodGroup">—</strong>
+          </div>
+          <div class="ig-detail">
+            <span>Primary sport</span>
+            <strong id="reportPrimarySport">—</strong>
+          </div>
+          <div class="ig-detail">
+            <span>Email</span>
+            <strong id="reportEmail">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 LATEST SCREENING -->
+      <div class="ig-report-panel">
+        <div class="ig-panel-heading">
+          <div class="ig-panel-heading-left">
+            <span class="ig-section-number">02</span>
+            <div>
+              <h3>Latest screening result</h3>
+              <p>Most recent AI-assisted assessment</p>
+            </div>
+          </div>
+
+          <span class="history-count">LATEST RESULT</span>
+        </div>
+
+        <div class="ig-risk-layout">
+          <div class="ig-risk-ring">
+            <div class="ig-risk-ring-content">
+              <strong id="reportRiskScore">—</strong>
+              <small>Risk score</small>
+            </div>
+          </div>
+
+          <div class="ig-risk-details">
+            <div class="ig-risk-box">
+              <span>Risk level</span>
+              <strong id="reportRiskLevel">No assessment</strong>
+            </div>
+
+            <div class="ig-risk-box">
+              <span>Assessment date</span>
+              <strong id="reportAssessmentDate">No assessment</strong>
+            </div>
+
+            <div class="ig-risk-message" id="reportRiskMessage">
+              No assessment has been completed yet.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 X-RAY HISTORY -->
+      <div class="ig-report-panel">
+        <div class="ig-panel-heading">
+          <div class="ig-panel-heading-left">
+            <span class="ig-section-number">03</span>
+            <div>
+              <h3>X-ray history</h3>
+              <p>Previous and current injury imaging records</p>
+            </div>
+          </div>
+          <span class="history-count">X-RAYS</span>
+        </div>
+
+        <div id="reportXrayList" class="ig-record-list">
+          <div class="ig-record-empty">No X-ray records available.</div>
+        </div>
+      </div>
+
+      <!-- 04 MEDICAL HISTORY -->
+      <div class="ig-report-panel">
+        <div class="ig-panel-heading">
+          <div class="ig-panel-heading-left">
+            <span class="ig-section-number">04</span>
+            <div>
+              <h3>Medical history</h3>
+              <p>Previous injuries, conditions and recovery notes</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="reportMedicalList" class="ig-record-list">
+          <div class="ig-record-empty">No medical history records available.</div>
+        </div>
+      </div>
+
+      <!-- 05 ASSESSMENT HISTORY -->
+      <div class="ig-report-panel">
+        <div class="ig-panel-heading">
+          <div class="ig-panel-heading-left">
+            <span class="ig-section-number">05</span>
+            <div>
+              <h3>Assessment history</h3>
+              <p>Timeline of saved AI-assisted screening checks</p>
+            </div>
+          </div>
+          <span class="history-count">TIMELINE</span>
+        </div>
+
+        <div id="reportAssessmentList" class="ig-record-list">
+          <div class="ig-record-empty">No assessment history available.</div>
+        </div>
+      </div>
+
+      <!-- DISCLAIMER -->
+      <div class="ig-report-disclaimer">
+        <div class="ig-report-disclaimer-icon">!</div>
+        <div>
+          <strong>Important medical disclaimer</strong>
+          <p>
+            This report is an AI-assisted screening summary and personal health record.
+            It is not a medical diagnosis, treatment recommendation or clinically validated
+            prediction. Consult a qualified healthcare professional for medical evaluation.
+          </p>
+        </div>
+      </div>
+
+      <div class="ig-report-bottom-actions">
+        <button id="downloadReportBottom" type="button" onclick="document.getElementById('downloadReport').click()">
+          ↓ Download Athlete Report
+        </button>
+        <button id="printReportBottom" type="button" class="secondary" onclick="document.getElementById('printReport').click()">
+          Print Report
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     SAFETY GUIDANCE
+====================================================== -->
+
+<section
+  id="guidance"
+  class="page hide"
+>
+
+  <div class="intro">
+
+    <small>
+      SAFETY GUIDANCE
+    </small>
+
+    <h1>
+      Training and recovery guidance
+    </h1>
+
+    <p>
+      General safety information—not a diagnosis or treatment plan.
+    </p>
+
+  </div>
+
+
+  <div class="guide-grid">
+
+
+    <article class="guide">
+
+      <small>
+        01
+      </small>
+
+      <h3>
+        Before activity
+      </h3>
+
+      <ul>
+
+        <li>
+          Warm up gradually.
+        </li>
+
+        <li>
+          Check how your body feels before increasing intensity.
+        </li>
+
+        <li>
+          Use appropriate protective equipment.
+        </li>
+
+      </ul>
+
+    </article>
+
+
+    <article class="guide">
+
+      <small>
+        02
+      </small>
+
+      <h3>
+        During activity
+      </h3>
+
+      <ul>
+
+        <li>
+          Do not push through significant or worsening pain.
+        </li>
+
+        <li>
+          Pause if you feel unsafe or unable to continue normally.
+        </li>
+
+        <li>
+          Follow your coach's safety instructions.
+        </li>
+
+      </ul>
+
+    </article>
+
+
+    <article class="guide">
+
+      <small>
+        03
+      </small>
+
+      <h3>
+        After activity
+      </h3>
+
+      <ul>
+
+        <li>
+          Allow adequate rest and recovery.
+        </li>
+
+        <li>
+          Track changes in pain or function.
+        </li>
+
+        <li>
+          Follow your normal recovery routine.
+        </li>
+
+      </ul>
+
+    </article>
+
+
+    <article class="guide alert">
+
+      <small>
+        04
+      </small>
+
+      <h3>
+        When to get professional help
+      </h3>
+
+      <ul>
+
+        <li>
+          Symptoms are severe, worsening or persistent.
+        </li>
+
+        <li>
+          You cannot use the affected body part normally.
+        </li>
+
+        <li>
+          You are concerned about an injury or your safety.
+        </li>
+
+      </ul>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

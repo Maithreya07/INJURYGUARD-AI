@@ -1,0 +1,6 @@
+fastapi[standard]
+sqlmodel
+python-multipart
+torch
+torchvision
+pillow

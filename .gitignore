@@ -1,0 +1,38 @@
+# Python virtual environments
+venv/
+.venv/
+# Project archives
+*.zip
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Node dependencies
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+
+# Local database and uploads
+InjuryGuard_AI_FastAPI_Backend/injuryguard.db
+InjuryGuard_AI_FastAPI_Backend/uploads/*
+
+# Large datasets
+FracAtlas/
+InjuryGuard_Video_AI/dataset/
+
+# Model weights
+*.pth
+*.pt
+*.onnx
+
+# Temporary files
+*.log
+*.tmp
+*.bak

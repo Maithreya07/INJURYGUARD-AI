@@ -1,0 +1,2676 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>InjuryGuard | Athlete Check</title>
+
+<style>
+:root{
+  --bg:#f6f7f9;
+  --card:#fff;
+  --text:#18212f;
+  --muted:#697386;
+  --line:#e5e7eb;
+  --blue:#2563eb;
+  --green:#16845b;
+  --amber:#b76a00;
+  --red:#c53b32;
+  --r:16px
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:14px/1.5 Inter,Segoe UI,Arial,sans-serif
+}
+
+button,input,select,textarea{
+  font:inherit
+}
+
+header{
+  height:66px;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 7%;
+  position:sticky;
+  top:0;
+  z-index:5
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-weight:750;
+  font-size:18px
+}
+
+.mark{
+  width:30px;
+  height:30px;
+  border-radius:9px;
+  background:#eef4ff;
+  color:var(--blue);
+  display:grid;
+  place-items:center;
+  font-weight:900
+}
+
+nav{
+  display:flex;
+  gap:3px
+}
+
+nav button{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:8px 12px;
+  border-radius:9px;
+  cursor:pointer
+}
+
+nav button.active,
+nav button:hover{
+  background:#f1f3f6;
+  color:var(--text)
+}
+
+main{
+  max-width:1080px;
+  margin:auto;
+  padding:34px 24px 60px
+}
+
+.view{
+  display:none
+}
+
+.view.active{
+  display:block
+}
+
+.hero{
+  margin-bottom:24px
+}
+
+.eyebrow{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--blue);
+  font-weight:750
+}
+
+.hero h1{
+  font-size:30px;
+  line-height:1.2;
+  margin:6px 0
+}
+
+.hero p{
+  margin:0;
+  color:var(--muted);
+  max-width:680px
+}
+
+.cards,
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px
+}
+
+.grid{
+  grid-template-columns:1fr 1fr
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:20px
+}
+
+.stat small{
+  color:var(--muted)
+}
+
+.stat strong{
+  display:block;
+  font-size:28px;
+  margin:4px 0
+}
+
+.title{
+  font-size:17px;
+  font-weight:750
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px
+}
+
+.form{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:18px
+}
+
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:6px
+}
+
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  border:1px solid #d5d9df;
+  border-radius:10px;
+  background:#fff;
+  padding:10px 11px;
+  outline:none
+}
+
+.field textarea{
+  min-height:88px;
+  resize:vertical
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:#8fb0f5;
+  box-shadow:0 0 0 3px #edf3ff
+}
+
+.full{
+  grid-column:1/-1
+}
+
+.upload{
+  border:1px dashed #b9c0ca;
+  border-radius:11px;
+  padding:14px;
+  background:#fafbfc
+}
+
+.actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:18px
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:10px 16px;
+  font-weight:700;
+  cursor:pointer
+}
+
+.primary{
+  background:var(--blue);
+  color:#fff
+}
+
+.secondary{
+  background:#fff;
+  border:1px solid var(--line)
+}
+
+.result{
+  display:none;
+  margin-top:16px
+}
+
+.result.show{
+  display:block
+}
+
+.resultbox{
+  display:flex;
+  align-items:center;
+  gap:22px
+}
+
+.score{
+  font-size:48px;
+  font-weight:800
+}
+
+.pill{
+  display:inline-block;
+  border-radius:99px;
+  padding:5px 9px;
+  font-size:11px;
+  font-weight:750
+}
+
+.low{
+  background:#eaf8f1;
+  color:var(--green)
+}
+
+.moderate{
+  background:#fff4df;
+  color:var(--amber)
+}
+
+.high{
+  background:#ffebe9;
+  color:var(--red)
+}
+
+.item{
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:11px;
+  margin-top:9px;
+  background:#fff
+}
+
+.note{
+  margin-top:14px;
+  padding:12px 14px;
+  background:#f8fafc;
+  border-radius:11px;
+  color:var(--muted);
+  font-size:12px
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:12px
+}
+
+th,
+td{
+  text-align:left;
+  padding:11px 8px;
+  border-bottom:1px solid var(--line)
+}
+
+th{
+  font-size:11px;
+  color:var(--muted);
+  text-transform:uppercase
+}
+
+.empty{
+  text-align:center;
+  padding:35px;
+  color:var(--muted)
+}
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#18212f;
+  color:#fff;
+  padding:11px 14px;
+  border-radius:10px;
+  display:none
+}
+
+/* X-RAY */
+
+.xray-upload{
+  border:2px dashed #cbd5e1;
+  border-radius:14px;
+  padding:35px 20px;
+  text-align:center;
+  background:#fafbfc
+}
+
+.xray-upload input{
+  margin-top:15px
+}
+
+.xray-preview{
+  display:none;
+  margin:20px auto 0;
+  max-width:100%;
+  max-height:430px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  object-fit:contain
+}
+
+.xray-preview.show{
+  display:block
+}
+
+.xray-result{
+  display:none;
+  margin-top:20px;
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff
+}
+
+.xray-result.show{
+  display:block
+}
+
+.xray-prediction{
+  font-size:28px;
+  font-weight:800;
+  margin:5px 0
+}
+
+.xray-confidence{
+  color:var(--muted);
+  margin-top:4px
+}
+
+.xray-status{
+  margin-top:12px;
+  padding:11px 13px;
+  border-radius:10px;
+  background:#f8fafc;
+  color:var(--muted);
+  font-size:12px
+}
+
+/* LOGIN */
+
+.login-screen{
+  position:fixed;
+  inset:0;
+  background:#f6f7f9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:100
+}
+
+.login-card{
+  width:100%;
+  max-width:410px;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:32px;
+  box-shadow:0 14px 40px rgba(24,33,47,.08)
+}
+
+.login-logo{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  font-weight:750;
+  font-size:18px;
+  margin-bottom:30px
+}
+
+.login-eyebrow{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#2563eb;
+  font-weight:750
+}
+
+.login-card h1{
+  font-size:27px;
+  line-height:1.2;
+  margin:7px 0
+}
+
+.login-sub{
+  color:#697386;
+  margin:0 0 24px;
+  font-size:13px
+}
+
+.login-field{
+  margin-bottom:15px
+}
+
+.login-field label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:6px
+}
+
+.login-field input{
+  width:100%;
+  border:1px solid #d5d9df;
+  border-radius:10px;
+  background:#fff;
+  padding:11px;
+  outline:none
+}
+
+.login-field input:focus{
+  border-color:#8fb0f5;
+  box-shadow:0 0 0 3px #edf3ff
+}
+
+.login-btn{
+  width:100%;
+  margin-top:4px
+}
+
+.login-error{
+  min-height:20px;
+  text-align:center;
+  color:#c53b32;
+  font-size:12px;
+  margin-top:10px
+}
+
+.demo-login{
+  margin-top:18px;
+  padding:12px 14px;
+  background:#f8fafc;
+  border-radius:10px;
+  color:#697386;
+  font-size:12px;
+  display:flex;
+  flex-direction:column;
+  gap:3px
+}
+
+.demo-login strong{
+  color:#18212f;
+  margin-bottom:2px
+}
+
+@media(max-width:760px){
+
+  header{
+    padding:0 14px
+  }
+
+  nav{
+    overflow-x:auto
+  }
+
+  nav button{
+    padding:7px
+  }
+
+  .cards,
+  .grid,
+  .form{
+    grid-template-columns:1fr
+  }
+
+  .full{
+    grid-column:auto
+  }
+
+  .hero h1{
+    font-size:25px
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginScreen" class="login-screen">
+
+  <div class="login-card">
+
+    <div class="login-logo">
+      <div class="mark">+</div>
+      InjuryGuard
+    </div>
+
+    <div class="login-eyebrow">
+      Welcome back
+    </div>
+
+    <h1>
+      Sign in to continue
+    </h1>
+
+    <p class="login-sub">
+      Enter your user ID and password to access your health check dashboard.
+    </p>
+
+    <div class="login-field">
+
+      <label>User ID</label>
+
+      <input
+        id="loginUser"
+        type="text"
+        placeholder="Enter your user ID"
+        autocomplete="username"
+      >
+
+    </div>
+
+    <div class="login-field">
+
+      <label>Password</label>
+
+      <input
+        id="loginPass"
+        type="password"
+        placeholder="Enter your password"
+        autocomplete="current-password"
+      >
+
+    </div>
+
+    <button
+      class="btn primary login-btn"
+      onclick="loginUser()"
+    >
+      Sign in
+    </button>
+
+    <div
+      id="loginError"
+      class="login-error"
+    ></div>
+
+    <div class="demo-login">
+
+      <strong>Demo login</strong>
+
+      <span>User ID: <b>user01</b></span>
+
+      <span>Password: <b>Injury@123</b></span>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+  <div class="brand">
+
+    <div class="mark">+</div>
+
+    InjuryGuard
+
+  </div>
+
+
+  <nav>
+
+    <button
+      class="active"
+      data-view="home"
+      onclick="showView('home')"
+    >
+      Home
+    </button>
+
+    <button
+      data-view="check"
+      onclick="showView('check')"
+    >
+      Check now
+    </button>
+
+    <!-- X-RAY ADDED -->
+
+    <button
+      data-view="xray"
+      onclick="showView('xray')"
+    >
+      X-ray check
+    </button>
+
+    <button
+      data-view="history"
+      onclick="showView('history')"
+    >
+      Past checks
+    </button>
+
+    <button
+      data-view="guide"
+      onclick="showView('guide')"
+    >
+      Guidance
+    </button>
+
+    <button onclick="logoutUser()">
+      Log out
+    </button>
+
+  </nav>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main>
+
+
+<!-- ================= HOME ================= -->
+
+<section
+  id="home"
+  class="view active"
+>
+
+  <div class="hero">
+
+    <div class="eyebrow">
+      Athlete wellness
+    </div>
+
+    <h1>
+      Stay aware of how your body is doing.
+    </h1>
+
+    <p>
+      A quick check of pain, recovery, training load and movement-related symptoms before your next session.
+    </p>
+
+  </div>
+
+
+  <div class="cards">
+
+    <div class="card stat">
+
+      <small>Last check</small>
+
+      <strong id="homeRisk">
+        —
+      </strong>
+
+      <span
+        class="muted"
+        id="homeDate"
+      >
+        No recent result
+      </span>
+
+    </div>
+
+
+    <div class="card stat">
+
+      <small>Current pain</small>
+
+      <strong id="homePain">
+        —
+      </strong>
+
+      <span class="muted">
+        From your latest entry
+      </span>
+
+    </div>
+
+
+    <div class="card stat">
+
+      <small>Past checks</small>
+
+      <strong id="homeCount">
+        0
+      </strong>
+
+      <span class="muted">
+        Saved records
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="grid"
+    style="margin-top:14px"
+  >
+
+    <div class="card">
+
+      <div class="title">
+        Before training
+      </div>
+
+      <div class="muted">
+        If something feels different today, take a minute to record it before starting.
+      </div>
+
+      <button
+        class="btn primary"
+        style="margin-top:16px"
+        onclick="showView('check')"
+      >
+        Start a check
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="title">
+        X-ray screening
+      </div>
+
+      <div class="muted">
+        Upload an X-ray image to check the trained fracture-screening model.
+      </div>
+
+      <button
+        class="btn secondary"
+        style="margin-top:16px"
+        onclick="showView('xray')"
+      >
+        Check X-ray
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= BODY CHECK ================= -->
+
+<section
+  id="check"
+  class="view"
+>
+
+  <div class="hero">
+
+    <div class="eyebrow">
+      Quick check
+    </div>
+
+    <h1>
+      How are you feeling today?
+    </h1>
+
+    <p>
+      Enter a few details about your current session. It only takes a minute.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="title">
+      Session details
+    </div>
+
+    <div class="muted">
+      Choose the options that best match how you feel right now.
+    </div>
+
+
+    <div class="form">
+
+      <div class="field">
+
+        <label>Sport</label>
+
+        <select id="sport">
+
+          <option>Cricket</option>
+          <option>Football</option>
+          <option>Basketball</option>
+          <option>Athletics</option>
+          <option>Badminton</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>How hard will you train?</label>
+
+        <select id="intensity">
+
+          <option>Low</option>
+          <option selected>Moderate</option>
+          <option>High</option>
+          <option>Very High</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Previous injury</label>
+
+        <select id="previous">
+
+          <option>No previous injury</option>
+          <option>Minor previous injury</option>
+          <option>Major previous injury</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Days since your last hard session</label>
+
+        <input
+          id="days"
+          type="number"
+          min="0"
+          value="2"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Where does it hurt?</label>
+
+        <select id="painLoc">
+
+          <option>No pain</option>
+          <option>Left knee</option>
+          <option>Right knee</option>
+          <option>Ankle</option>
+          <option>Shoulder</option>
+          <option>Back</option>
+          <option>Other</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Pain level (0–10)</label>
+
+        <input
+          id="pain"
+          type="number"
+          min="0"
+          max="10"
+          value="0"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Muscle condition</label>
+
+        <select id="muscle">
+
+          <option>Normal</option>
+          <option>Mild soreness</option>
+          <option>High fatigue</option>
+          <option>Cramps / severe tightness</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Joint stability</label>
+
+        <select id="ligament">
+
+          <option>Stable</option>
+          <option>Mild instability</option>
+          <option>Previous ligament issue</option>
+          <option>Strong instability</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>How ready do you feel?</label>
+
+        <select id="mental">
+
+          <option>Very confident</option>
+          <option>Confident</option>
+          <option>Neutral</option>
+          <option>Worried about injury</option>
+          <option>High pressure / fear</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Sleep / recovery</label>
+
+        <select id="sleep">
+
+          <option>Good</option>
+          <option>Average</option>
+          <option>Poor</option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field full">
+
+        <label>Anything you noticed?</label>
+
+        <textarea
+          id="feedback"
+          placeholder="For example: My knee feels uncomfortable when I land after a jump."
+        ></textarea>
+
+      </div>
+
+
+      <div class="field full">
+
+        <label>
+          Optional movement photo or video
+        </label>
+
+        <div class="upload">
+
+          <input
+            id="media"
+            type="file"
+            accept="image/*,video/*"
+          >
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn secondary"
+        onclick="resetForm()"
+      >
+        Clear
+      </button>
+
+      <button
+        class="btn primary"
+        onclick="runCheck()"
+      >
+        Get my result
+      </button>
+
+    </div>
+
+
+    <div
+      id="result"
+      class="result"
+    >
+
+      <div class="resultbox">
+
+        <div>
+
+          <div class="muted">
+            Current risk level
+          </div>
+
+          <div
+            class="score"
+            id="score"
+          >
+            —
+          </div>
+
+          <span
+            id="riskBadge"
+            class="pill moderate"
+          >
+            —
+          </span>
+
+        </div>
+
+
+        <div>
+
+          <div
+            class="title"
+            id="resultTitle"
+          >
+            Result
+          </div>
+
+          <div
+            class="muted"
+            id="resultText"
+          >
+          </div>
+
+          <div
+            class="note"
+            id="nextStep"
+          >
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="note">
+
+        For general wellness support only.
+        It does not replace a medical examination
+        or professional advice.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= X-RAY ================= -->
+
+<section
+  id="xray"
+  class="view"
+>
+
+  <div class="hero">
+
+    <div class="eyebrow">
+      AI X-ray screening
+    </div>
+
+    <h1>
+      Check an X-ray for possible fracture.
+    </h1>
+
+    <p>
+      Upload an X-ray image and let the trained fracture-screening model analyze it.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="title">
+      Upload X-ray
+    </div>
+
+    <div class="muted">
+      Upload a clear X-ray image in JPG, JPEG or PNG format.
+    </div>
+
+
+    <div
+      class="xray-upload"
+      style="margin-top:18px"
+    >
+
+      <div class="title">
+        Select X-ray image
+      </div>
+
+      <div class="muted">
+        Supported formats: JPG, JPEG, PNG
+      </div>
+
+      <input
+        id="xrayFile"
+        type="file"
+        accept="image/jpeg,image/jpg,image/png"
+      >
+
+
+      <img
+        id="xrayPreview"
+        class="xray-preview"
+        alt="X-ray preview"
+      >
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="btn secondary"
+        onclick="clearXray()"
+      >
+        Clear
+      </button>
+
+      <button
+        class="btn primary"
+        onclick="analyzeXray()"
+      >
+        Analyze X-ray
+      </button>
+
+    </div>
+
+
+    <!-- X-RAY RESULT -->
+
+    <div
+      id="xrayResult"
+      class="xray-result"
+    >
+
+      <div class="muted">
+        AI screening result
+      </div>
+
+      <div
+        id="xrayPrediction"
+        class="xray-prediction"
+      >
+        —
+      </div>
+
+      <div
+        id="xrayConfidence"
+        class="xray-confidence"
+      >
+        Confidence: —
+      </div>
+
+
+      <div
+        id="xrayStatus"
+        class="xray-status"
+      >
+        —
+      </div>
+
+
+      <div class="note">
+
+        This is an AI-assisted screening result from the trained model.
+        It is not a medical diagnosis and should not replace assessment by a qualified healthcare professional.
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= HISTORY ================= -->
+
+<section
+  id="history"
+  class="view"
+>
+
+  <div class="hero">
+
+    <div class="eyebrow">
+      Your records
+    </div>
+
+    <h1>
+      Past checks
+    </h1>
+
+    <p>
+      Review the results saved from previous sessions.
+    </p>
+
+  </div>
+
+
+  <div class="card">
+
+    <div
+      id="historyWrap"
+      class="empty"
+    >
+      Loading your records…
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= GUIDANCE ================= -->
+
+<section
+  id="guide"
+  class="view"
+>
+
+  <div class="hero">
+
+    <div class="eyebrow">
+      Simple guidance
+    </div>
+
+    <h1>
+      Look after your body.
+    </h1>
+
+    <p>
+      Small habits can help you notice problems earlier.
+    </p>
+
+  </div>
+
+
+  <div class="grid">
+
+    <div class="card">
+
+      <div class="title">
+        Pain
+      </div>
+
+      <div class="muted">
+        Notice when pain starts, what movement triggers it and whether it settles with rest. Persistent or worsening pain deserves professional attention.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="title">
+        Recovery
+      </div>
+
+      <div class="muted">
+        Sleep, rest days, hydration and sensible training progression all affect how ready your body feels.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="title">
+        Movement
+      </div>
+
+      <div class="muted">
+        If a familiar movement suddenly feels unstable, uneven or uncomfortable, reduce the load and reassess.
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="title">
+        Return to play
+      </div>
+
+      <div class="muted">
+        After an injury, follow guidance from a qualified clinician or physiotherapist before demanding activity.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+<script>
+
+const API = 'http://127.0.0.1:8000';
+
+
+/* ================= NAVIGATION ================= */
+
+function showView(id){
+
+  document
+    .querySelectorAll('.view')
+    .forEach(v =>
+      v.classList.remove('active')
+    );
+
+
+  const selected =
+    document.getElementById(id);
+
+
+  if(selected){
+    selected.classList.add('active');
+  }
+
+
+  document
+    .querySelectorAll('nav button')
+    .forEach(b => {
+
+      b.classList.toggle(
+        'active',
+        b.dataset.view === id
+      );
+
+    });
+
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+
+  if(id === 'history'){
+    loadHistory();
+  }
+
+
+  if(id === 'home'){
+    loadSummary();
+  }
+
+}
+
+
+/* ================= LOGIN ================= */
+
+function loginUser(){
+
+  const user =
+    document
+      .getElementById('loginUser')
+      .value
+      .trim();
+
+
+  const pass =
+    document
+      .getElementById('loginPass')
+      .value;
+
+
+  const err =
+    document
+      .getElementById('loginError');
+
+
+  if(
+    user === 'user01' &&
+    pass === 'Injury@123'
+  ){
+
+    sessionStorage.setItem(
+      'injuryguard_logged_in',
+      'true'
+    );
+
+
+    document
+      .getElementById('loginScreen')
+      .style.display = 'none';
+
+
+    err.textContent = '';
+
+
+    showView('home');
+
+    loadSummary();
+
+
+  }else{
+
+    err.textContent =
+      'Incorrect user ID or password.';
+
+  }
+
+}
+
+
+/* ================= CHECK LOGIN ================= */
+
+function checkLogin(){
+
+  const loggedIn =
+    sessionStorage.getItem(
+      'injuryguard_logged_in'
+    );
+
+
+  if(loggedIn === 'true'){
+
+    document
+      .getElementById('loginScreen')
+      .style.display = 'none';
+
+  }else{
+
+    document
+      .getElementById('loginScreen')
+      .style.display = 'flex';
+
+  }
+
+}
+
+
+/* ================= ENTER KEY ================= */
+
+document.addEventListener(
+  'keydown',
+  function(e){
+
+    const screen =
+      document.getElementById(
+        'loginScreen'
+      );
+
+
+    if(
+      e.key === 'Enter' &&
+      screen.style.display !== 'none'
+    ){
+
+      loginUser();
+
+    }
+
+  }
+);
+
+
+/* ================= RESET BODY FORM ================= */
+
+function resetForm(){
+
+  document
+    .getElementById('pain')
+    .value = 0;
+
+
+  document
+    .getElementById('days')
+    .value = 2;
+
+
+  document
+    .getElementById('feedback')
+    .value = '';
+
+
+  document
+    .getElementById('media')
+    .value = '';
+
+
+  document
+    .getElementById('result')
+    .classList.remove('show');
+
+}
+
+
+/* ================= BODY CHECK ================= */
+
+async function runCheck(){
+
+  const map = {
+
+    sport:'sport',
+    intensity:'intensity',
+    previous:'previous_injury',
+    days:'recovery_days',
+    painLoc:'pain_location',
+    pain:'pain_level',
+    muscle:'muscle_condition',
+    ligament:'ligament_stability',
+    mental:'mental_readiness',
+    sleep:'sleep_quality',
+    feedback:'feedback'
+
+  };
+
+
+  const fd =
+    new FormData();
+
+
+  Object.keys(map).forEach(id => {
+
+    fd.append(
+      map[id],
+      document
+        .getElementById(id)
+        .value
+    );
+
+  });
+
+
+  const file =
+    document
+      .getElementById('media')
+      .files[0];
+
+
+  if(file){
+
+    fd.append(
+      'media',
+      file
+    );
+
+  }
+
+
+  try{
+
+    const r =
+      await fetch(
+        API + '/api/assessments',
+        {
+          method:'POST',
+          body:fd
+        }
+      );
+
+
+    if(!r.ok){
+      throw new Error(
+        'Backend error'
+      );
+    }
+
+
+    const d =
+      await r.json();
+
+
+    console.log(
+      'ASSESSMENT RESPONSE:',
+      d
+    );
+
+
+    let score =
+      d.risk_score;
+
+
+    if(
+      score === undefined ||
+      score === null
+    ){
+
+      score =
+        d.risk_percentage;
+
+    }
+
+
+    const level =
+      d.risk_level ||
+      d.riskLevel ||
+      '';
+
+
+    if(
+      score === undefined ||
+      score === null
+    ){
+
+      score = '—';
+
+    }
+
+
+    showResult(
+      score,
+      level
+    );
+
+
+    toast(
+      'Your check has been saved.'
+    );
+
+
+    loadSummary();
+
+
+  }catch(e){
+
+    console.error(e);
+
+
+    const s =
+      demoScore();
+
+
+    const level =
+      s >= 65
+        ? 'High'
+        : s >= 35
+        ? 'Moderate'
+        : 'Low';
+
+
+    showResult(
+      s,
+      level
+    );
+
+
+    toast(
+      'Backend not connected — showing a local result.'
+    );
+
+  }
+
+}
+
+
+/* ================= DEMO SCORE ================= */
+
+function demoScore(){
+
+  let s = 10;
+
+
+  const v =
+    id =>
+      document
+        .getElementById(id)
+        .value;
+
+
+  s +=
+    +v('pain') * 3;
+
+
+  if(
+    v('previous')
+      .includes('Minor')
+  ){
+    s += 7;
+  }
+
+
+  if(
+    v('previous')
+      .includes('Major')
+  ){
+    s += 14;
+  }
+
+
+  if(
+    v('intensity') === 'High'
+  ){
+    s += 8;
+  }
+
+
+  if(
+    v('intensity') === 'Very High'
+  ){
+    s += 12;
+  }
+
+
+  if(
+    +v('days') <= 1
+  ){
+    s += 7;
+  }
+
+
+  if(
+    v('muscle') === 'Mild soreness'
+  ){
+    s += 5;
+  }
+
+
+  if(
+    v('muscle') === 'High fatigue'
+  ){
+    s += 10;
+  }
+
+
+  if(
+    v('muscle')
+      .includes('Cramps')
+  ){
+    s += 14;
+  }
+
+
+  if(
+    v('ligament')
+      .includes('Mild')
+  ){
+    s += 8;
+  }
+
+
+  if(
+    v('ligament')
+      .includes('Previous')
+  ){
+    s += 10;
+  }
+
+
+  if(
+    v('ligament')
+      .includes('Strong')
+  ){
+    s += 17;
+  }
+
+
+  if(
+    v('mental')
+      .includes('Worried')
+  ){
+    s += 4;
+  }
+
+
+  if(
+    v('mental')
+      .includes('High pressure')
+  ){
+    s += 7;
+  }
+
+
+  if(
+    v('sleep') === 'Poor'
+  ){
+    s += 5;
+  }
+
+
+  if(
+    /jump|land|twist|unstable|collapse|sharp|swelling|giving/i
+      .test(v('feedback'))
+  ){
+    s += 7;
+  }
+
+
+  return Math.max(
+    5,
+    Math.min(92,s)
+  );
+
+}
+
+
+/* ================= SHOW BODY RESULT ================= */
+
+function showResult(
+  score,
+  level
+){
+
+  document
+    .getElementById('score')
+    .textContent =
+      score + '%';
+
+
+  const b =
+    document
+      .getElementById('riskBadge');
+
+
+  b.textContent =
+    level || 'Unknown';
+
+
+  const cleanLevel =
+    String(level)
+      .toLowerCase();
+
+
+  if(
+    cleanLevel === 'low'
+  ){
+
+    b.className =
+      'pill low';
+
+  }else if(
+    cleanLevel === 'high'
+  ){
+
+    b.className =
+      'pill high';
+
+  }else{
+
+    b.className =
+      'pill moderate';
+
+  }
+
+
+  document
+    .getElementById('resultTitle')
+    .textContent =
+
+      level === 'High'
+      ? 'Take a pause before training'
+
+      : level === 'Moderate'
+      ? 'A little extra care may help'
+
+      : 'No major warning from this check';
+
+
+  document
+    .getElementById('resultText')
+    .textContent =
+
+      level === 'High'
+
+      ? 'Several warning signals were entered. Consider stopping high-intensity activity and getting professional advice, especially if symptoms are severe or worsening.'
+
+      : level === 'Moderate'
+
+      ? 'Consider reducing intensity, monitoring how you feel and repeating the check before a demanding session.'
+
+      : 'Keep monitoring how you feel and allow sensible recovery between demanding sessions.';
+
+
+  document
+    .getElementById('nextStep')
+    .textContent =
+
+      'Next step: ' +
+
+      (
+        level === 'High'
+
+        ? 'Rest and seek qualified medical assessment if needed.'
+
+        : level === 'Moderate'
+
+        ? 'Keep the next session lighter and reassess.'
+
+        : 'Continue normal monitoring and recovery.'
+      );
+
+
+  document
+    .getElementById('result')
+    .classList.add('show');
+
+}
+
+
+/* =====================================================
+   X-RAY SECTION
+   ===================================================== */
+
+
+/* ================= X-RAY PREVIEW ================= */
+
+document
+  .getElementById('xrayFile')
+  .addEventListener(
+    'change',
+    function(){
+
+      const file =
+        this.files[0];
+
+
+      const preview =
+        document.getElementById(
+          'xrayPreview'
+        );
+
+
+      if(!file){
+
+        preview.src = '';
+
+        preview.classList.remove(
+          'show'
+        );
+
+        return;
+
+      }
+
+
+      if(
+        !file.type.startsWith(
+          'image/'
+        )
+      ){
+
+        toast(
+          'Please select an image file.'
+        );
+
+        this.value = '';
+
+        return;
+
+      }
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(e){
+
+          preview.src =
+            e.target.result;
+
+          preview.classList.add(
+            'show'
+          );
+
+        };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+
+
+/* ================= ANALYZE X-RAY ================= */
+
+async function analyzeXray(){
+
+  const input =
+    document.getElementById(
+      'xrayFile'
+    );
+
+
+  const result =
+    document.getElementById(
+      'xrayResult'
+    );
+
+
+  const prediction =
+    document.getElementById(
+      'xrayPrediction'
+    );
+
+
+  const confidence =
+    document.getElementById(
+      'xrayConfidence'
+    );
+
+
+  const status =
+    document.getElementById(
+      'xrayStatus'
+    );
+
+
+  const file =
+    input.files[0];
+
+
+  if(!file){
+
+    toast(
+      'Please upload an X-ray image first.'
+    );
+
+    return;
+
+  }
+
+
+  const fd =
+    new FormData();
+
+
+  /*
+    IMPORTANT:
+
+    Your FastAPI endpoint should have:
+
+    file: UploadFile
+
+    So frontend sends:
+
+    fd.append("file", file)
+  */
+
+  fd.append(
+    'file',
+    file
+  );
+
+
+  prediction.textContent =
+    'Analyzing...';
+
+
+  confidence.textContent =
+    'Please wait while the AI model processes the X-ray.';
+
+
+  status.textContent =
+    'Connecting to the fracture prediction model...';
+
+
+  result.classList.add(
+    'show'
+  );
+
+
+  try{
+
+    const response =
+      await fetch(
+        API + '/api/fracture-predict',
+        {
+          method:'POST',
+          body:fd
+        }
+      );
+
+
+    if(!response.ok){
+
+      const errorText =
+        await response.text();
+
+
+      throw new Error(
+        errorText ||
+        'X-ray prediction failed'
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    console.log(
+      'X-RAY RESPONSE:',
+      data
+    );
+
+
+    /*
+      Expected backend response:
+
+      {
+        "prediction": "FRACTURED",
+        "confidence": 97.61
+      }
+    */
+
+
+    const resultText =
+      data.prediction ||
+      data.result ||
+      data.label ||
+      'UNKNOWN';
+
+
+    const confidenceValue =
+      data.confidence;
+
+
+    prediction.textContent =
+      resultText;
+
+
+    if(
+      confidenceValue !== undefined &&
+      confidenceValue !== null
+    ){
+
+      confidence.textContent =
+        'Confidence: ' +
+        confidenceValue +
+        '%';
+
+    }else{
+
+      confidence.textContent =
+        'Confidence: Not available';
+
+    }
+
+
+    if(
+      String(resultText)
+        .toUpperCase()
+        .includes('FRACTURED')
+    ){
+
+      prediction.style.color =
+        '#c53b32';
+
+
+      status.textContent =
+        'The model detected features associated with a possible fracture. Please have the X-ray reviewed by a qualified healthcare professional.';
+
+    }else{
+
+      prediction.style.color =
+        '#16845b';
+
+
+      status.textContent =
+        'The model did not detect features associated with a fracture in this screening. This does not rule out an injury.';
+
+    }
+
+
+    toast(
+      'X-ray analysis completed.'
+    );
+
+
+  }catch(error){
+
+    console.error(
+      'X-RAY ERROR:',
+      error
+    );
+
+
+    prediction.textContent =
+      'Analysis failed';
+
+
+    confidence.textContent =
+      '';
+
+
+    status.textContent =
+      'Could not connect to the X-ray prediction endpoint. Make sure FastAPI is running and /api/fracture-predict is available.';
+
+
+    prediction.style.color =
+      '#c53b32';
+
+
+    toast(
+      'X-ray backend connection failed.'
+    );
+
+  }
+
+}
+
+
+/* ================= CLEAR X-RAY ================= */
+
+function clearXray(){
+
+  document
+    .getElementById('xrayFile')
+    .value = '';
+
+
+  const preview =
+    document.getElementById(
+      'xrayPreview'
+    );
+
+
+  preview.src = '';
+
+  preview.classList.remove(
+    'show'
+  );
+
+
+  document
+    .getElementById(
+      'xrayResult'
+    )
+    .classList.remove(
+      'show'
+    );
+
+
+  document
+    .getElementById(
+      'xrayPrediction'
+    )
+    .textContent = '—';
+
+
+  document
+    .getElementById(
+      'xrayConfidence'
+    )
+    .textContent = 'Confidence: —';
+
+
+  document
+    .getElementById(
+      'xrayStatus'
+    )
+    .textContent = '—';
+
+}
+
+
+/* ================= HISTORY ================= */
+
+async function loadHistory(){
+
+  const w =
+    document.getElementById(
+      'historyWrap'
+    );
+
+
+  w.className = 'empty';
+
+  w.textContent =
+    'Loading your records…';
+
+
+  try{
+
+    const r =
+      await fetch(
+        API + '/api/assessments'
+      );
+
+
+    if(!r.ok){
+      throw new Error(
+        'History error'
+      );
+    }
+
+
+    const rows =
+      await r.json();
+
+
+    if(!Array.isArray(rows)){
+
+      throw new Error(
+        'Invalid history response'
+      );
+
+    }
+
+
+    if(!rows.length){
+
+      w.className = 'empty';
+
+      w.textContent =
+        'No checks yet.';
+
+      return;
+
+    }
+
+
+    w.className = '';
+
+
+    w.innerHTML =
+
+      '<table>' +
+
+      '<thead>' +
+
+      '<tr>' +
+
+      '<th>Date</th>' +
+
+      '<th>Sport</th>' +
+
+      '<th>Pain</th>' +
+
+      '<th>Risk</th>' +
+
+      '<th>Level</th>' +
+
+      '</tr>' +
+
+      '</thead>' +
+
+      '<tbody>' +
+
+      rows.map(x => {
+
+        const score =
+          x.risk_score ??
+          x.risk_percentage ??
+          '—';
+
+
+        const level =
+          x.risk_level ||
+          '—';
+
+
+        const date =
+          x.created_at
+          ? new Date(
+              x.created_at
+            ).toLocaleDateString()
+          : '—';
+
+
+        return `
+
+          <tr>
+
+            <td>${date}</td>
+
+            <td>${x.sport || '—'}</td>
+
+            <td>${x.pain_level ?? '—'}/10</td>
+
+            <td>${score}%</td>
+
+            <td>
+              ${level}
+            </td>
+
+          </tr>
+
+        `;
+
+      }).join('') +
+
+      '</tbody>' +
+
+      '</table>';
+
+
+  }catch(e){
+
+    console.error(e);
+
+
+    w.className =
+      'empty';
+
+
+    w.textContent =
+      'Could not load records. Start the backend and refresh.';
+
+  }
+
+}
+
+
+/* ================= HOME SUMMARY ================= */
+
+async function loadSummary(){
+
+  try{
+
+    const r =
+      await fetch(
+        API + '/api/assessments'
+      );
+
+
+    if(!r.ok){
+      throw new Error(
+        'Summary error'
+      );
+    }
+
+
+    const rows =
+      await r.json();
+
+
+    if(!Array.isArray(rows)){
+      return;
+    }
+
+
+    document
+      .getElementById(
+        'homeCount'
+      )
+      .textContent =
+        rows.length;
+
+
+    if(rows.length){
+
+      const x =
+        rows[0];
+
+
+      const score =
+        x.risk_score ??
+        x.risk_percentage;
+
+
+      document
+        .getElementById(
+          'homeRisk'
+        )
+        .textContent =
+          score !== undefined &&
+          score !== null
+          ? score + '%'
+          : '—';
+
+
+      document
+        .getElementById(
+          'homeDate'
+        )
+        .textContent =
+
+          (
+            x.risk_level ||
+            'Unknown'
+          ) +
+
+          ' · ' +
+
+          (
+            x.created_at
+            ? new Date(
+                x.created_at
+              ).toLocaleDateString()
+            : '—'
+          );
+
+
+      document
+        .getElementById(
+          'homePain'
+        )
+        .textContent =
+
+          x.pain_level !== undefined &&
+          x.pain_level !== null
+
+          ? x.pain_level + '/10'
+
+          : '—';
+
+    }
+
+
+  }catch(e){
+
+    console.log(
+      'Summary unavailable:',
+      e
+    );
+
+  }
+
+}
+
+
+/* ================= LOGOUT ================= */
+
+function logoutUser(){
+
+  sessionStorage.removeItem(
+    'injuryguard_logged_in'
+  );
+
+
+  document
+    .getElementById(
+      'loginScreen'
+    )
+    .style.display = 'flex';
+
+
+  document
+    .getElementById(
+      'loginUser'
+    )
+    .value = '';
+
+
+  document
+    .getElementById(
+      'loginPass'
+    )
+    .value = '';
+
+
+  document
+    .getElementById(
+      'loginError'
+    )
+    .textContent = '';
+
+
+  showView('home');
+
+}
+
+
+/* ================= TOAST ================= */
+
+function toast(msg){
+
+  const t =
+    document.getElementById(
+      'toast'
+    );
+
+
+  t.textContent =
+    msg;
+
+
+  t.style.display =
+    'block';
+
+
+  setTimeout(
+    () => {
+      t.style.display =
+        'none';
+    },
+    2500
+  );
+
+}
+
+
+/* ================= START APP ================= */
+
+checkLogin();
+
+loadSummary();
+
+</script>
+
+</body>
+</html>
